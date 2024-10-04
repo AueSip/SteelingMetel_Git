@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets - Fixed/Interactables/PaintBuckets.png" type="Texture" id=1]
+[ext_resource path="res://DetectionZone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/PrototypeExamples/PinkPaintPrototype.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "PaintObj"
+length = 2.0
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 1, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 45.0, 15.0, 0.0, -15.0, -45.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 1, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 0.933033, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 3, 3 ), Vector2( 3, 3 ), Vector2( 3.4, 3.4 ), Vector2( 3, 3 ), Vector2( 3.4, 3.4 ), Vector2( 3, 3 ), Vector2( 3, 3 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.0
+
+[node name="PinkPaint" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 0.241048
+scale = Vector2( 3.37808, 3.37808 )
+texture = ExtResource( 1 )
+hframes = 3
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "PaintObj"
+anims/PaintObj = SubResource( 1 )
+
+[node name="DetectionZone" parent="." instance=ExtResource( 2 )]
+scale = Vector2( 1.84091, 2.02934 )
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_DetectionZone_body_entered"]

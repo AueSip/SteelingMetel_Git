@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Particles/WheelParticle.png" type="Texture" id=1]
+[ext_resource path="res://Particles/WheelParticle.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Materials/WheelParticle_Mat.tres" type="Material" id=3]
+
+[sub_resource type="Curve" id=63]
+_data = [ Vector2( 0.011236, 0.156818 ), 0.0, 0.0, 0, 0, Vector2( 0.52809, 0.490909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0568181 ), -0.266408, -0.266408, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=64]
+curve = SubResource( 63 )
+
+[sub_resource type="ParticlesMaterial" id=62]
+flag_disable_z = true
+gravity = Vector3( 8, -2, 0 )
+initial_velocity = 25.0
+angular_velocity = 225.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 5.0
+scale_curve = SubResource( 64 )
+anim_speed = 4.0
+
+[sub_resource type="Animation" id=65]
+resource_name = "delete"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[node name="WheelParticle" type="Particles2D"]
+material = ExtResource( 3 )
+rotation = 3.14159
+amount = 1
+lifetime = 0.3
+one_shot = true
+process_material = SubResource( 62 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/delete = SubResource( 65 )

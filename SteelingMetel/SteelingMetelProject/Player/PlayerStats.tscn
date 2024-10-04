@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PlayerStats.gd" type="Script" id=1]
+
+[node name="PlayerStats" type="Node"]
+script = ExtResource( 1 )
+max_health = 5
+max_energy = 7
+
+[node name="EnergyRecharge" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="EnergyRecharge" to="." method="_on_EnergyRecharge_timeout"]
